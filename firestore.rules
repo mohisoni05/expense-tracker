@@ -1,0 +1,49 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if the user is accessing their own data
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    // Helper function to validate expense data
+    function isValidExpense() {
+      let hasValidFields = 
+        request.resource.data.keys().hasAll(['title', 'amount', 'category', 'date', 'userId', 'createdAt']) &&
+        request.resource.data.title is string &&
+        request.resource.data.amount is number &&
+        request.resource.data.category is string &&
+        request.resource.data.date is string &&
+        request.resource.data.userId is string;
+      
+      let hasValidValues = 
+        request.resource.data.title.size() > 0 &&
+        request.resource.data.amount > 0;
+      
+      return hasValidFields && hasValidValues;
+    }
+    
+    // Users collection
+    match /users/{userId} {
+      allow read: if isAuthenticated() && isOwner(userId);
+      allow create, update: if isAuthenticated() && isOwner(userId);
+      allow delete: if false; // Prevent user deletion through client
+    }
+    
+    // Expenses collection
+    match /expenses/{expenseId} {
+      allow read: if isAuthenticated() && isOwner(resource.data.userId);
+      allow create: if isAuthenticated() 
+        && isOwner(request.resource.data.userId)
+        && isValidExpense();
+      allow delete: if isAuthenticated() && isOwner(resource.data.userId);
+      allow update: if false; // Prevent expense updates (create new or delete instead)
+    }
+  }
+} 

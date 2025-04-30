@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartTrack - Authentication</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2 id="authTitle">Sign In to SmartTrack</h2>
+                <p id="authSubtitle">Welcome back! Please enter your details.</p>
+            </div>
+
+            <form id="authForm" class="auth-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required placeholder="Enter your password">
+                </div>
+
+                <div id="passwordConfirmGroup" class="form-group" style="display: none;">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Confirm your password">
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-full" id="submitButton">Sign In</button>
+                </div>
+
+                <p id="errorMessage" class="error-message"></p>
+
+                <div class="auth-links">
+                    <a href="#" id="forgotPassword">Forgot password?</a>
+                    <a href="#" id="toggleAuth">Don't have an account? Sign up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/auth.js"></script>
+</body>
+</html> 
