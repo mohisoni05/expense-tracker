@@ -114,17 +114,6 @@ smarttrack/
 4. Push to the branch: `git push origin feature/AmazingFeature`
 5. Open a Pull Request
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- Firebase team for the excellent documentation
-- Chart.js for the visualization library
-- The open-source community for inspiration and resources
-
-## Contact
 
 Your Name - [your.email@example.com](mailto:your.email@example.com)
 
